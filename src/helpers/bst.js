@@ -1,13 +1,15 @@
-const {isRed, size} = require('node');
+const Node = require('../Node');
 const {
   RED,
+  isRed,
+  size,
   rotateLeft,
   rotateRight,
   flipColors,
   moveRedLeft,
   moveRedRight,
   balance,
-} = require('./helpers/redBlack.js');
+} = require('./redBlack');
 
 function compare(a, b) {
   if (a > b) return 1;
@@ -15,22 +17,38 @@ function compare(a, b) {
   return 0;
 }
 
+// the smallest key in subtree rooted at x; null if no such key
+function min(x) {
+  // assert x != null;
+  if (x.left === null) return x;
+  return min(x.left);
+}
+
+// the largest key in the subtree rooted at x; null if no such key
+function max(x) {
+  // assert x != null;
+  if (x.right === null) return x;
+  return max(x.right);
+}
+
 // value associated with the given key in subtree rooted at x; null if no such key
-function get(node, key) {
+function get(_node, key) {
+  let node = _node;
   while (node != null) {
-    const cmp = compareTo(key, node.key);
-    if (cmp < 0) x = node.left;
-    else if (cmp > 0) x = node.right;
+    const cmp = compare(key, node.key);
+    if (cmp < 0) node = node.left;
+    else if (cmp > 0) node = node.right;
     else return node.val;
   }
   return null;
 }
 
 // insert the key-value pair in the subtree rooted at h
-function put(h, key, val) {
+function put(_h, key, val) {
+  let h = _h;
   if (h === null) return new Node(key, val, RED, 1);
 
-  const cmp = compareTo(key, h.key);
+  const cmp = compare(key, h.key);
   if (cmp < 0) h.left = put(h.left, key, val);
   else if (cmp > 0) h.right = put(h.right, key, val);
   else h.val = val;
@@ -45,7 +63,8 @@ function put(h, key, val) {
 }
 
 // delete the key-value pair with the minimum key rooted at h
-function deleteMin(h) {
+function deleteMin(_h) {
+  let h = _h;
   if (h.left === null) return null;
 
   if (!isRed(h.left) && !isRed(h.left.left)) h = moveRedLeft(h);
@@ -55,7 +74,8 @@ function deleteMin(h) {
 }
 
 // delete the key-value pair with the maximum key rooted at h
-function deleteMax(h) {
+function deleteMax(_h) {
+  let h = _h;
   if (isRed(h.left)) h = rotateRight(h);
 
   if (h.right === null) return null;
@@ -68,8 +88,9 @@ function deleteMax(h) {
 }
 
 // delete the key-value pair with the given key rooted at h
-function deleteKey(h, key) {
+function deleteKey(_h, key) {
   // assert get(h, key) != null;
+  let h = _h;
 
   if (compare(key, h.key) < 0) {
     if (!isRed(h.left) && !isRed(h.left.left)) h = moveRedLeft(h);
@@ -93,20 +114,6 @@ function deleteKey(h, key) {
 function height(x) {
   if (x === null) return -1;
   return 1 + Math.max(height(x.left), height(x.right));
-}
-
-// the smallest key in subtree rooted at x; null if no such key
-function min(x) {
-  // assert x != null;
-  if (x.left === null) return x;
-  return min(x.left);
-}
-
-// the largest key in the subtree rooted at x; null if no such key
-function max(x) {
-  // assert x != null;
-  if (x.right === null) return x;
-  return max(x.right);
 }
 
 // the largest key in the subtree rooted at x less than or equal to the given key
@@ -133,11 +140,11 @@ function ceiling(x, key) {
 
 // Return key in BST rooted at x of given rank.
 // Precondition: rank is in legal range.
-function select(x, rank) {
+function select(x, _rank) {
   if (x === null) return null;
   const leftSize = size(x.left);
-  if (leftSize > rank) return select(x.left, rank);
-  if (leftSize < rank) return select(x.right, rank - leftSize - 1);
+  if (leftSize > _rank) return select(x.left, _rank);
+  if (leftSize < _rank) return select(x.right, _rank - leftSize - 1);
   return x.key;
 }
 
@@ -164,11 +171,11 @@ function keys(x, queue, lo, hi) {
 // is the tree rooted at x a BST with all keys strictly between min and max
 // (if min or max is null, treat as empty constraint)
 // Credit: Bob Dondero's elegant solution
-function isBST(x, min, max) {
+function isBST(x, _min, _max) {
   if (x === null) return true;
-  if (min !== null && compare(x.key, min) <= 0) return false;
-  if (max !== null && compare(x.key, max) >= 0) return false;
-  return isBST(x.left, min, x.key) && isBST(x.right, x.key, max);
+  if (_min !== null && compare(x.key, _min) <= 0) return false;
+  if (_max !== null && compare(x.key, _max) >= 0) return false;
+  return isBST(x.left, _min, x.key) && isBST(x.right, x.key, _max);
 }
 
 // are the size fields correct?
@@ -179,7 +186,8 @@ function isSizeConsistent(x) {
 }
 
 // does every path from the root to a leaf have the given number of black links?
-function isBalanced(x, black) {
+function isBalanced(x, _black) {
+  let black = _black;
   if (x === null) return black === 0;
   if (!isRed(x)) black--;
   return isBalanced(x.left, black) && isBalanced(x.right, black);
