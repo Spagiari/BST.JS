@@ -1,160 +1,160 @@
-const { RED, BLACK, balance } = require("../../src/helpers/redBlack");
+const { RED, BLACK, balance } = require('../../src/helpers/redBlack');
 
-describe("rotate left", () => {
+describe('rotate left', () => {
   const root = {
-    key: "E",
+    key: 'E',
     color: BLACK,
     size: 5,
     val: 5,
     left: {
-      key: "A",
+      key: 'A',
       color: BLACK,
       size: 1,
       val: 1,
       left: null,
-      right: null
+      right: null,
     },
     right: {
-      key: "S",
+      key: 'S',
       color: RED,
       size: 3,
       val: 10,
       left: {
-        key: "F",
+        key: 'F',
         color: BLACK,
         size: 1,
         val: 6,
         left: null,
-        right: null
+        right: null,
       },
       right: {
-        key: "T",
+        key: 'T',
         color: BLACK,
         size: 1,
         val: 11,
         left: null,
-        right: null
-      }
-    }
+        right: null,
+      },
+    },
   };
 
   const expected = {
-    key: "S",
+    key: 'S',
     color: BLACK,
     size: 5,
     val: 10,
     left: {
-      key: "E",
+      key: 'E',
       color: RED,
       size: 3,
       val: 5,
       left: {
-        key: "A",
+        key: 'A',
         color: BLACK,
         size: 1,
         val: 1,
         left: null,
-        right: null
+        right: null,
       },
       right: {
-        key: "F",
+        key: 'F',
         color: BLACK,
         size: 1,
         val: 6,
         left: null,
-        right: null
-      }
+        right: null,
+      },
     },
     right: {
-      key: "T",
+      key: 'T',
       color: BLACK,
       size: 1,
       val: 11,
       left: null,
-      right: null
-    }
+      right: null,
+    },
   };
-  it("simple case", () => {
+  it('simple case', () => {
     const result = balance(root);
     expect(result).toEqual(expected);
   });
 });
 
-describe("rotate right", () => {
+describe('rotate right', () => {
   const root = {
-    key: "S",
+    key: 'S',
     color: BLACK,
     size: 5,
     val: 10,
     left: {
-      key: "E",
+      key: 'E',
       color: RED,
       size: 3,
       val: 5,
       left: {
-        key: "A",
+        key: 'A',
         color: RED,
         size: 1,
         val: 1,
         left: null,
-        right: null
+        right: null,
       },
       right: {
-        key: "F",
+        key: 'F',
         color: BLACK,
         size: 1,
         val: 6,
         left: null,
-        right: null
-      }
+        right: null,
+      },
     },
     right: {
-      key: "T",
+      key: 'T',
       color: BLACK,
       size: 1,
       val: 11,
       left: null,
-      right: null
-    }
+      right: null,
+    },
   };
 
   const expected = {
-    key: "E",
+    key: 'E',
     color: RED,
     size: 5,
     val: 5,
     left: {
-      key: "A",
+      key: 'A',
       color: BLACK,
       size: 1,
       val: 1,
       left: null,
-      right: null
+      right: null,
     },
     right: {
-      key: "S",
+      key: 'S',
       color: BLACK,
       size: 3,
       val: 10,
       left: {
-        key: "F",
+        key: 'F',
         color: BLACK,
         size: 1,
         val: 6,
         left: null,
-        right: null
+        right: null,
       },
       right: {
-        key: "T",
+        key: 'T',
         color: BLACK,
         size: 1,
         val: 11,
         left: null,
-        right: null
-      }
-    }
+        right: null,
+      },
+    },
   };
-  it("simple case", () => {
+  it('simple case', () => {
     const result = balance(root);
     expect(result).toEqual(expected);
   });

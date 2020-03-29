@@ -1,4 +1,4 @@
-const {RED, BLACK, rotateRight} = require('../../src/helpers/redBlack');
+const { RED, BLACK, rotateRight } = require('../../src/helpers/redBlack');
 
 const root = {
   key: 'S',
