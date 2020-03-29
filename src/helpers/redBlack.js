@@ -1,5 +1,3 @@
-const Node = require("../Node");
-
 /** *************************************************************************
  *  Red-black tree helper functions.
  ************************************************************************** */
@@ -57,9 +55,10 @@ function flipColors(h) {
 
 // Assuming that h is red and both h.left and h.left.left
 // are black, make h.left or one of its children red.
-function moveRedLeft(h) {
+function moveRedLeft(_h) {
   // assert (h != null);
   // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
+  let h = _h;
 
   flipColors(h);
   if (isRed(h.right.left)) {
@@ -72,9 +71,11 @@ function moveRedLeft(h) {
 
 // Assuming that h is red and both h.right and h.right.left
 // are black, make h.right or one of its children red.
-function moveRedRight(h) {
+function moveRedRight(_h) {
   // assert (h != null);
   // assert isRed(h) && !isRed(h.right) && !isRed(h.right.left);
+  let h = _h;
+
   flipColors(h);
   if (isRed(h.left.left)) {
     h = rotateRight(h);
@@ -84,8 +85,9 @@ function moveRedRight(h) {
 }
 
 // restore red-black tree invariant
-function balance(h) {
+function balance(_h) {
   // assert (h != null);
+  let h = _h;
 
   if (isRed(h.right)) h = rotateLeft(h);
   if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);

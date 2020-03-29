@@ -16,6 +16,7 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-    'no-plusplus': 'off'
+    'no-plusplus': 'off',
+    'no-param-reassign': [2, { "props": false }]
   },
 };
