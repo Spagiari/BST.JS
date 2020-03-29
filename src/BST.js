@@ -1,4 +1,4 @@
-const { RED, BLACK, isRed, size } = require("./helpers/redBlack.js");
+const { RED, BLACK, isRed, size } = require('./helpers/redBlack.js');
 const {
   compare,
   get,
@@ -13,11 +13,11 @@ const {
   ceiling,
   select,
   rank,
-  keys,
+  keysInRange,
   isBST,
   isSizeConsistent,
-  isBalanced
-} = require("./helpers/bst.js");
+  isBalanced,
+} = require('./helpers/bst.js');
 
 class BST {
   /**
@@ -55,7 +55,7 @@ class BST {
    * @throws IllegalArgumentException if {@code key} is {@code null}
    */
   get(key) {
-    if (key === null) throw new Error("argument to get() is null");
+    if (key === null) throw new Error('argument to get() is null');
     return get(this.root, key);
   }
 
@@ -67,7 +67,7 @@ class BST {
    * @throws IllegalArgumentException if {@code key} is {@code null}
    */
   contains(key) {
-    return get(key) !== null;
+    return this.get(key) !== null;
   }
 
   /** *************************************************************************
@@ -85,7 +85,7 @@ class BST {
    * @throws IllegalArgumentException if {@code key} is {@code null}
    */
   put(key, val) {
-    if (key === null) throw new Error("first argument to put() is null");
+    if (key === null) throw new Error('first argument to put() is null');
     if (val === null) {
       this.delete(key);
       return;
@@ -105,11 +105,12 @@ class BST {
    * @throws NoSuchElementException if the symbol table is empty
    */
   deleteMin() {
-    if (this.isEmpty()) throw new Error("BST underflow");
+    if (this.isEmpty()) throw new Error('BST underflow');
 
     // if both children of root are black, set root to red
-    if (!isRed(this.root.left) && !isRed(this.root.right))
-      {this.root.color = RED;}
+    if (!isRed(this.root.left) && !isRed(this.root.right)) {
+      this.root.color = RED;
+    }
 
     this.root = deleteMin(this.root);
     if (!this.isEmpty()) this.root.color = BLACK;
@@ -121,11 +122,12 @@ class BST {
    * @throws NoSuchElementException if the symbol table is empty
    */
   deleteMax() {
-    if (this.isEmpty()) throw new Error("BST underflow");
+    if (this.isEmpty()) throw new Error('BST underflow');
 
     // if both children of root are black, set root to red
-    if (!isRed(this.root.left) && !isRed(this.root.right))
-      {this.root.color = RED;}
+    if (!isRed(this.root.left) && !isRed(this.root.right)) {
+      this.root.color = RED;
+    }
 
     this.root = deleteMax(this.root);
     if (!this.isEmpty()) this.root.color = BLACK;
@@ -140,12 +142,13 @@ class BST {
    * @throws IllegalArgumentException if {@code key} is {@code null}
    */
   delete(key) {
-    if (key === null) throw new Error("argument to delete() is null");
+    if (key === null) throw new Error('argument to delete() is null');
     if (!this.contains(key)) return;
 
     // if both children of root are black, set root to red
-    if (!isRed(this.root.left) && !isRed(this.root.right))
-      {this.root.color = RED;}
+    if (!isRed(this.root.left) && !isRed(this.root.right)) {
+      this.root.color = RED;
+    }
 
     this.root = deleteKey(this.root, key);
     if (!this.isEmpty()) this.root.color = BLACK;
@@ -174,7 +177,7 @@ class BST {
    * @throws NoSuchElementException if the symbol table is empty
    */
   min() {
-    if (isEmpty()) throw new Error("calls min() with empty symbol table");
+    if (this.isEmpty()) throw new Error('calls min() with empty symbol table');
     return min(this.root).key;
   }
 
@@ -184,7 +187,7 @@ class BST {
    * @throws NoSuchElementException if the symbol table is empty
    */
   max() {
-    if (isEmpty()) throw new Error("calls max() with empty symbol table");
+    if (this.isEmpty()) throw new Error('calls max() with empty symbol table');
     return max(this.root).key;
   }
 
@@ -196,11 +199,12 @@ class BST {
    * @throws IllegalArgumentException if {@code key} is {@code null}
    */
   floor(key) {
-    if (key === null) throw new Error("argument to floor() is null");
-    if (this.isEmpty())
-      {throw new Error("calls floor() with empty symbol table");}
+    if (key === null) throw new Error('argument to floor() is null');
+    if (this.isEmpty()) {
+      throw new Error('calls floor() with empty symbol table');
+    }
     const x = floor(this.root, key);
-    if (x === null) throw new Error("argument to floor() is too small");
+    if (x === null) throw new Error('argument to floor() is too small');
     else return x.key;
   }
 
@@ -212,11 +216,12 @@ class BST {
    * @throws IllegalArgumentException if {@code key} is {@code null}
    */
   ceiling(key) {
-    if (key === null) throw new Error("argument to ceiling() is null");
-    if (this.isEmpty())
-      {throw new Error("calls ceiling() with empty symbol table");}
+    if (key === null) throw new Error('argument to ceiling() is null');
+    if (this.isEmpty()) {
+      throw new Error('calls ceiling() with empty symbol table');
+    }
     const x = ceiling(this.root, key);
-    if (x === null) throw new Error("argument to ceiling() is too small");
+    if (x === null) throw new Error('argument to ceiling() is too small');
     else return x.key;
   }
 
@@ -231,11 +236,15 @@ class BST {
    * @throws IllegalArgumentException unless {@code rank} is between 0 and
    *        <em>n</em>–1
    */
-  select(rank) {
-    if (rank < 0 || rank >= this.size()) {
-      throw new Error(`argument to select() is invalid: ${  rank}`);
-    }
-    return select(this.root, rank);
+  select(_rank) {
+    if (
+      _rank < 0 ||
+      _rank >= this.size() ||
+      typeof _rank !== 'number' ||
+      !Number.isInteger(_rank)
+    )
+      throw new Error(`argument to select() is invalid: ${_rank}`);
+    return select(this.root, _rank);
   }
 
   /**
@@ -245,7 +254,7 @@ class BST {
    * @throws IllegalArgumentException if {@code key} is {@code null}
    */
   rank(key) {
-    if (key === null) throw new Error("argument to rank() is null");
+    if (key === null) throw new Error('argument to rank() is null');
     return rank(key, this.root);
   }
 
@@ -261,7 +270,7 @@ class BST {
    */
   keys() {
     if (this.isEmpty()) return [];
-    return this.keys(min(), max());
+    return this.keysInRange(this.min(), this.max());
   }
 
   /**
@@ -275,13 +284,13 @@ class BST {
    * @throws IllegalArgumentException if either {@code lo} or {@code hi}
    *    is {@code null}
    */
-  keys(lo, hi) {
-    if (lo == null) throw new Error("first argument to keys() is null");
-    if (hi == null) throw new Error("second argument to keys() is null");
+  keysInRange(lo, hi) {
+    if (lo == null) throw new Error('first argument to keys() is null');
+    if (hi == null) throw new Error('second argument to keys() is null');
 
     const queue = [];
     // if (isEmpty() || lo.compareTo(hi) > 0) return queue;
-    keys(this.root, queue, lo, hi);
+    keysInRange(this.root, queue, lo, hi);
     return queue;
   }
 
@@ -295,9 +304,9 @@ class BST {
    * @throws IllegalArgumentException if either {@code lo} or {@code hi}
    *    is {@code null}
    */
-  size(lo, hi) {
-    if (lo == null) throw new Error("first argument to size() is null");
-    if (hi == null) throw new Error("second argument to size() is null");
+  sizeInRange(lo, hi) {
+    if (lo == null) throw new Error('first argument to sizeInRange() is null');
+    if (hi == null) throw new Error('second argument to sizeInRange() is null');
 
     if (compare(lo, hi) > 0) return 0;
     if (this.contains(hi)) return this.rank(hi) - this.rank(lo) + 1;
@@ -308,17 +317,17 @@ class BST {
    *  Check integrity of red-black tree data structure.
    ************************************************************************** */
   check() {
-    if (!isBST()) console.log("Not in symmetric order");
-    if (!isSizeConsistent()) console.log("Subtree counts not consistent");
-    if (!isRankConsistent()) console.log("Ranks not consistent");
-    if (!is23()) console.log("Not a 2-3 tree");
-    if (!isBalanced()) console.log("Not balanced");
+    if (!this.isBST()) console.log('Not in symmetric order');
+    if (!this.isSizeConsistent()) console.log('Subtree counts not consistent');
+    if (!this.isRankConsistent()) console.log('Ranks not consistent');
+    if (!this.is23()) console.log('Not a 2-3 tree');
+    if (!this.isBalanced()) console.log('Not balanced');
     return (
-      isBST() &&
-      isSizeConsistent() &&
-      isRankConsistent() &&
-      is23() &&
-      isBalanced()
+      this.isBST() &&
+      this.isSizeConsistent() &&
+      this.isRankConsistent() &&
+      this.is23() &&
+      this.isBalanced()
     );
   }
 
@@ -334,24 +343,26 @@ class BST {
 
   // check that ranks are consistent
   isRankConsistent() {
-    for (let i = 0; i < this.size(); i++)
-      {if (i !== this.rank(this.select(i))) return false;}
-    keys().forEach(key => {
-      if (compare(key, select(rank(key))) != 0) return false;
-    });
-    return true;
+    for (let i = 0; i < this.size(); i++) {
+      if (i !== this.rank(this.select(i))) return false;
+    }
+
+    return this.keys()
+      .map(_key => compare(_key, this.select(this.rank(_key))) === 0)
+      .reduce((acc, curr) => acc && curr, true);
   }
 
   // Does the tree have no red right links, and at most one (left)
   // red links in a row on any path?
-  is23() {
-    return this._is23(this.root);
-  }
-  _is23(x) {
+  is23x(x) {
     if (x === null) return true;
     if (isRed(x.right)) return false;
     if (x !== this.root && isRed(x) && isRed(x.left)) return false;
-    return this._is23(x.left) && this._is23(x.right);
+    return this.is23x(x.left) && this.is23x(x.right);
+  }
+
+  is23() {
+    return this.is23x(this.root);
   }
 
   // do all paths from root to leaf have same number of black edges?

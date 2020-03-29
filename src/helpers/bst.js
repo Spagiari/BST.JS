@@ -34,8 +34,9 @@ function max(x) {
 // value associated with the given key in subtree rooted at x; null if no such key
 function get(_node, key) {
   let node = _node;
+  let cmp;
   while (node != null) {
-    const cmp = compare(key, node.key);
+    cmp = compare(key, node.key);
     if (cmp < 0) node = node.left;
     else if (cmp > 0) node = node.right;
     else return node.val;
@@ -159,13 +160,13 @@ function rank(key, x) {
 
 // add the keys between lo and hi in the subtree rooted at x
 // to the queue
-function keys(x, queue, lo, hi) {
+function keysInRange(x, queue, lo, hi) {
   if (x === null) return;
   const cmplo = compare(lo, x.key);
   const cmphi = compare(hi, x.key);
-  if (cmplo < 0) keys(x.left, queue, lo, hi);
+  if (cmplo < 0) keysInRange(x.left, queue, lo, hi);
   if (cmplo <= 0 && cmphi >= 0) queue.push(x.key);
-  if (cmphi > 0) keys(x.right, queue, lo, hi);
+  if (cmphi > 0) keysInRange(x.right, queue, lo, hi);
 }
 
 // is the tree rooted at x a BST with all keys strictly between min and max
@@ -207,7 +208,7 @@ module.exports = {
   ceiling,
   select,
   rank,
-  keys,
+  keysInRange,
   isBST,
   isSizeConsistent,
   isBalanced,

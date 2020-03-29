@@ -1,5 +1,5 @@
 class Node {
-  contructor(key, val, color, size) {
+  constructor(key, val, color, size) {
     this.key = key;
     this.val = val;
     this.color = color;

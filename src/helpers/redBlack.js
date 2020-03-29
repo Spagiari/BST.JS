@@ -12,7 +12,7 @@ function isRed(node) {
 
 // number of node in subtree rooted at x; 0 if x is null
 function size(node) {
-  if (node == null) return 0;
+  if (node === null) return 0;
   return node.size;
 }
 
