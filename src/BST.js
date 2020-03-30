@@ -1,3 +1,10 @@
+/**
+ * Red-black binary shearch tree.
+ * Implementation based on the Algs4 red-black BST.
+ * @module BST
+ * @author Eduardo Spagiari
+ */
+
 const { RED, BLACK, isRed, size } = require('./helpers/redBlack.js');
 const {
   compare,
@@ -19,28 +26,15 @@ const {
   isBalanced,
 } = require('./helpers/bst.js');
 
+/**
+ * Class representing a Red-black BST.
+ */
 class BST {
   /**
-   * Initializes an empty symbol table.
+   * Create a Red-black BST.
    */
   constructor() {
     this.root = null; // root of the BST
-  }
-
-  /**
-   * Returns the number of key-value pairs in this symbol table.
-   * @return the number of key-value pairs in this symbol table
-   */
-  size() {
-    return size(this.root);
-  }
-
-  /**
-   * Is this symbol table empty?
-   * @return {@code true} if this symbol table is empty and {@code false} otherwise
-   */
-  isEmpty() {
-    return this.root === null;
   }
 
   /** *************************************************************************
@@ -48,23 +42,39 @@ class BST {
    ************************************************************************** */
 
   /**
+   * Returns the number of key-value pairs in this symbol table.
+   * @return {number} the number of key-value pairs in this symbol table
+   */
+  size() {
+    return size(this.root);
+  }
+
+  /**
+   * Is this symbol table empty?
+   * @return {boolean} true if this symbol table is empty and false otherwise
+   */
+  isEmpty() {
+    return this.root === null;
+  }
+
+  /**
    * Returns the value associated with the given key.
-   * @param key the key
-   * @return the value associated with the given key if the key is in the symbol table
-   *     and {@code null} if the key is not in the symbol table
-   * @throws IllegalArgumentException if {@code key} is {@code null}
+   * @param {(string|number)} key - the key
+   * @return {(string|number|Object)} the value associated with the given key
+   *  if the key is in the symbol table and null if the key is not in the symbol table
+   * @throws Error if key is null
    */
   get(key) {
-    if (key === null) throw new Error('argument to get() is null');
+    if (key === null) throw new Error('Argument to get() is null');
     return get(this.root, key);
   }
 
   /**
    * Does this symbol table contain the given key?
-   * @param key the key
-   * @return {@code true} if this symbol table contains {@code key} and
-   *     {@code false} otherwise
-   * @throws IllegalArgumentException if {@code key} is {@code null}
+   * @param {(string|number)} key - the key
+   * @return {boolean} true if this symbol table contains key and
+   *     false otherwise
+   * @throws Error if key is null
    */
   contains(key) {
     return this.get(key) !== null;
@@ -78,11 +88,11 @@ class BST {
    * Inserts the specified key-value pair into the symbol table, overwriting the old
    * value with the new value if the symbol table already contains the specified key.
    * Deletes the specified key (and its associated value) from this symbol table
-   * if the specified value is {@code null}.
+   * if the specified value is null.
    *
-   * @param key the key
-   * @param val the value
-   * @throws IllegalArgumentException if {@code key} is {@code null}
+   * @param {(string|number)} key - the key
+   * @return {(string|number|Object)} val - the value associated with the given key
+   * @throws error if key is null
    */
   put(key, val) {
     if (key === null) throw new Error('first argument to put() is null');
@@ -102,7 +112,7 @@ class BST {
 
   /**
    * Removes the smallest key and associated value from the symbol table.
-   * @throws NoSuchElementException if the symbol table is empty
+   * @throws error if the symbol table is empty
    */
   deleteMin() {
     if (this.isEmpty()) throw new Error('BST underflow');
@@ -119,7 +129,7 @@ class BST {
 
   /**
    * Removes the largest key and associated value from the symbol table.
-   * @throws NoSuchElementException if the symbol table is empty
+   * @throws error if the symbol table is empty
    */
   deleteMax() {
     if (this.isEmpty()) throw new Error('BST underflow');
@@ -138,8 +148,8 @@ class BST {
    * Removes the specified key and its associated value from this symbol table
    * (if the key is in this symbol table).
    *
-   * @param  key the key
-   * @throws IllegalArgumentException if {@code key} is {@code null}
+   * @param {(string|number)} key - the key
+   * @throws error if key is null
    */
   delete(key) {
     if (key === null) throw new Error('argument to delete() is null');
@@ -161,7 +171,7 @@ class BST {
 
   /**
    * Returns the height of the BST (for debugging).
-   * @return the height of the BST (a 1-node tree has height 0)
+   * @return {number} the height of the BST (a 1-node tree has height 0)
    */
   height() {
     return height(this.root);
@@ -173,30 +183,31 @@ class BST {
 
   /**
    * Returns the smallest key in the symbol table.
-   * @return the smallest key in the symbol table
-   * @throws NoSuchElementException if the symbol table is empty
+   * @return {number} the smallest key in the symbol table
+   * @throws Error if the symbol table is empty
    */
   min() {
-    if (this.isEmpty()) throw new Error('calls min() with empty symbol table');
+    if (this.isEmpty()) throw new Error('Calls min() with empty symbol table');
     return min(this.root).key;
   }
 
   /**
    * Returns the largest key in the symbol table.
-   * @return the largest key in the symbol table
-   * @throws NoSuchElementException if the symbol table is empty
+   * @return {number} the largest key in the symbol table
+   * @throws Error if the symbol table is empty
    */
   max() {
-    if (this.isEmpty()) throw new Error('calls max() with empty symbol table');
+    if (this.isEmpty()) throw new Error('Calls max() with empty symbol table');
     return max(this.root).key;
   }
 
   /**
-   * Returns the largest key in the symbol table less than or equal to {@code key}.
-   * @param key the key
-   * @return the largest key in the symbol table less than or equal to {@code key}
-   * @throws NoSuchElementException if there is no such key
-   * @throws IllegalArgumentException if {@code key} is {@code null}
+   * Returns the largest key in the symbol table less than or equal to key.
+   * @param {(string|number)} key - the key
+   * @return {(string|number|Object)} the largest key in the symbol table
+   *  less than or equal to key
+   * @throws Error if there is no such key
+   * @throws Error if key is null
    */
   floor(key) {
     if (key === null) throw new Error('argument to floor() is null');
@@ -209,11 +220,12 @@ class BST {
   }
 
   /**
-   * Returns the smallest key in the symbol table greater than or equal to {@code key}.
-   * @param key the key
-   * @return the smallest key in the symbol table greater than or equal to {@code key}
-   * @throws NoSuchElementException if there is no such key
-   * @throws IllegalArgumentException if {@code key} is {@code null}
+   * Returns the smallest key in the symbol table greater than or equal to key.
+   * @param {(string|number)} key - the key
+   * @return {(string|number|Object)} the smallest key in the symbol table greater
+   *  than or equal to key
+   * @throws Error if there is no such key
+   * @throws Error if key is null
    */
   ceiling(key) {
     if (key === null) throw new Error('argument to ceiling() is null');
@@ -226,15 +238,14 @@ class BST {
   }
 
   /**
-   * Return the key in the symbol table of a given {@code rank}.
-   * This key has the property that there are {@code rank} keys in
+   * Return the key in the symbol table of a given rank.
+   * This key has the property that there are rank keys in
    * the symbol table that are smaller. In other words, this key is the
-   * ({@code rank}+1)st smallest key in the symbol table.
+   * (rank+1)st smallest key in the symbol table.
    *
-   * @param  rank the order statistic
-   * @return the key in the symbol table of given {@code rank}
-   * @throws IllegalArgumentException unless {@code rank} is between 0 and
-   *        <em>n</em>–1
+   * @param {number} rank - the order statistic
+   * @return {(string|number|Object)} the key in the symbol table of given rank
+   * @throws Error unless rank is between 0 and n–1
    */
   select(_rank) {
     if (
@@ -248,10 +259,10 @@ class BST {
   }
 
   /**
-   * Return the number of keys in the symbol table strictly less than {@code key}.
-   * @param key the key
-   * @return the number of keys in the symbol table strictly less than {@code key}
-   * @throws IllegalArgumentException if {@code key} is {@code null}
+   * Return the number of keys in the symbol table strictly less than key.
+   * @param {(string|number)} key - the key
+   * @return {number} the number of keys in the symbol table strictly less than key
+   * @throws Error if key is null
    */
   rank(key) {
     if (key === null) throw new Error('argument to rank() is null');
@@ -263,10 +274,10 @@ class BST {
    ************************************************************************** */
 
   /**
-   * Returns all keys in the symbol table as an {@code Iterable}.
-   * To iterate over all of the keys in the symbol table named {@code st},
-   * use the foreach notation: {@code for (Key key : st.keys())}.
-   * @return all keys in the symbol table as an {@code Iterable}
+   * Returns all keys in the symbol table as an Iterable.
+   * To iterate over all of the keys in the symbol table named st,
+   * use the foreach notation: for (Key key : st.keys()).
+   * @return {Array} all keys in the symbol table as an Iterable
    */
   keys() {
     if (this.isEmpty()) return [];
@@ -275,14 +286,13 @@ class BST {
 
   /**
    * Returns all keys in the symbol table in the given range,
-   * as an {@code Iterable}.
+   * as an Iterable.
    *
-   * @param  lo minimum endpoint
-   * @param  hi maximum endpoint
-   * @return all keys in the symbol table between {@code lo}
-   *    (inclusive) and {@code hi} (inclusive) as an {@code Iterable}
-   * @throws IllegalArgumentException if either {@code lo} or {@code hi}
-   *    is {@code null}
+   * @param {(string|number)} lo - minimum endpoint
+   * @param {(string|number)} hi - maximum endpoint
+   * @return {Array} all keys in the symbol table between lo
+   *    (inclusive) and hi (inclusive) as an Iterable
+   * @throws Error if either lo or hi is null
    */
   keysInRange(lo, hi) {
     if (lo == null) throw new Error('first argument to keys() is null');
@@ -297,12 +307,11 @@ class BST {
   /**
    * Returns the number of keys in the symbol table in the given range.
    *
-   * @param  lo minimum endpoint
-   * @param  hi maximum endpoint
-   * @return the number of keys in the symbol table between {@code lo}
-   *    (inclusive) and {@code hi} (inclusive)
-   * @throws IllegalArgumentException if either {@code lo} or {@code hi}
-   *    is {@code null}
+   * @param {(string|number)} lo - minimum endpoint
+   * @param {(string|number)} hi - maximum endpoint
+   * @return {number} the number of keys in the symbol table between lo
+   *    (inclusive) and hi (inclusive)
+   * @throws Error if either lo or hi null
    */
   sizeInRange(lo, hi) {
     if (lo == null) throw new Error('first argument to sizeInRange() is null');
@@ -315,6 +324,8 @@ class BST {
 
   /** *************************************************************************
    *  Check integrity of red-black tree data structure.
+   *
+   * @return {bollean} true if red-black tree data structure is integrate
    ************************************************************************** */
   check() {
     if (!this.isBST()) console.log('Not in symmetric order');
