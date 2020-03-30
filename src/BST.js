@@ -253,8 +253,9 @@ class BST {
       _rank >= this.size() ||
       typeof _rank !== 'number' ||
       !Number.isInteger(_rank)
-    )
+    ) {
       throw new Error(`argument to select() is invalid: ${_rank}`);
+    }
     return select(this.root, _rank);
   }
 
