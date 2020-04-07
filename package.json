@@ -1,6 +1,6 @@
 {
   "name": "red-black-bst",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Algs4 BST in javascript",
   "homepage": "https://github.com/Spagiari/BST.JS#readme",
   "main": "index.js",
