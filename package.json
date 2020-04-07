@@ -1,10 +1,15 @@
 {
-  "name": "bst",
+  "name": "bstjs",
   "version": "1.0.0",
   "description": "Algs4 BST in javascript",
+  "homepage": "https://github.com/Spagiari/BST.JS#readme",
   "main": "index.js",
   "scripts": {
     "test": "jest"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Spagiari/BST.JS"
   },
   "keywords": [
     "BST",
