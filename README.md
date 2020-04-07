@@ -8,7 +8,7 @@ $ npm install bst
 ```
 
 ```javascript
-const BST = require('bstjs');
+const BST = require('red-black-bst');
 
 const bst = new BST();
 
