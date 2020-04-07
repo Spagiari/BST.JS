@@ -1,5 +1,5 @@
 # BST.JS
-Implementation of Algs4 Red Black BST in javascript
+Implementation of [Algs4 Red Black BST](https://algs4.cs.princeton.edu/code/javadoc/edu/princeton/cs/algs4/BST.html) in javascript with no dependencies.
 
 ## Usage
 
