@@ -4,7 +4,7 @@ Implementation of Algs4 Red Black BST in javascript
 ## Usage
 
 ```bash
-$ npm install bst
+$ npm i red-black-bst
 ```
 
 ```javascript
@@ -19,6 +19,26 @@ console.log(bst.get('my key'))
 
 ## API
 
-#### put
+#### CRUD
 
-#### get
+###### Create
+
+###### Read
+
+###### Update
+
+###### Delete
+
+#### Query
+
+###### min
+
+###### max
+
+###### rank
+
+###### select
+
+###### floor
+
+###### ceilling

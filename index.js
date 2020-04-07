@@ -1,1 +1,3 @@
-require('./src/BST');
+const BST = require('./src/BST');
+
+module.exports = BST;
